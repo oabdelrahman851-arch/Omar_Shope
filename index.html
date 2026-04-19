@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omar Store | متجر عمر للإلكترونيات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #0f0f1a;
+  --bg3: #141422;
+  --card: #12121e;
+  --card2: #1a1a2e;
+  --border: #ffffff0f;
+  --border2: #ffffff1a;
+  --accent: #f59e0b;
+  --accent2: #fbbf24;
+  --accent3: #f97316;
+  --blue: #3b82f6;
+  --cyan: #06b6d4;
+  --green: #10b981;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --glow: rgba(245,158,11,0.15);
+  --glow2: rgba(245,158,11,0.05);
+  --shadow: 0 25px 50px rgba(0,0,0,0.8);
+  --radius: 16px;
+  --radius2: 24px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden;min-height:100vh;}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px;}
+
+/* ===== GRAIN OVERLAY ===== */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.4;
+}
+
+/* ===== PARTICLES ===== */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{position:absolute;width:2px;height:2px;background:var(--accent);border-radius:50%;opacity:0;animation:particleFloat linear infinite;}
+@keyframes particleFloat{
+  0%{opacity:0;transform:translateY(100vh) translateX(0);}
+  10%{opacity:0.6;}
+  90%{opacity:0.3;}
+  100%{opacity:0;transform:translateY(-100px) translateX(50px);}
+}
+
+/* ===== HEADER ===== */
+header{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(10,10,15,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;
+  transition:all 0.3s;
+}
+header.scrolled{background:rgba(10,10,15,0.98);box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-icon{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  box-shadow:0 0 20px var(--glow);
+}
+.logo-text{font-size:20px;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-text span{color:var(--accent);}
+nav{display:flex;align-items:center;gap:4px;}
+nav a{
+  color:var(--text2);text-decoration:none;
+  padding:8px 14px;border-radius:10px;
+  font-size:14px;font-weight:600;
+  transition:all 0.25s;
+  white-space:nowrap;
+}
+nav a:hover,nav a.active{color:var(--accent);background:var(--glow2);}
+.nav-controls{display:flex;align-items:center;gap:8px;}
+.btn-icon{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;
+  transition:all 0.2s;color:var(--text2);
+}
+.btn-icon:hover{background:var(--glow);border-color:var(--accent);color:var(--accent);}
+.cart-btn{position:relative;}
+.cart-badge{
+  position:absolute;top:-6px;right:-6px;
+  background:var(--accent);color:#000;
+  border-radius:50%;width:18px;height:18px;
+  font-size:10px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  display:none;
+}
+.login-btn{
+  padding:8px 20px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  color:#000;font-weight:700;font-size:13px;
+  cursor:pointer;border:none;
+  transition:all 0.3s;
+  box-shadow:0 4px 15px rgba(245,158,11,0.3);
+}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(245,158,11,0.5);}
+
+/* ===== HAMBURGER ===== */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.mobile-nav{
+  display:none;position:fixed;top:70px;left:0;right:0;
+  background:rgba(10,10,15,0.98);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  padding:20px;z-index:999;
+  flex-direction:column;gap:8px;
+}
+.mobile-nav a{
+  color:var(--text2);text-decoration:none;padding:12px 16px;
+  border-radius:12px;font-weight:600;font-size:15px;
+  transition:all 0.2s;
+}
+.mobile-nav a:hover{color:var(--accent);background:var(--glow2);}
+.mobile-nav.open{display:flex;}
+
+/* ===== HERO ===== */
+#hero{
+  min-height:90vh;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(59,130,246,0.05) 0%, transparent 60%),
+    var(--bg);
+}
+.hero-content{text-align:center;max-width:850px;padding:40px 20px;position:relative;z-index:1;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);
+  padding:8px 20px;border-radius:50px;
+  font-size:13px;color:var(--accent);font-weight:700;
+  margin-bottom:32px;
+  animation:fadeUp 0.6s ease both;
+}
+.hero-badge::before{content:'⚡';font-size:14px;}
+.hero-title{
+  font-size:clamp(2.5rem,6vw,5rem);font-weight:900;
+  line-height:1.1;margin-bottom:24px;
+  color:white;
+  animation:fadeUp 0.6s ease 0.1s both;
+}
+.hero-title .gold{
+  background:linear-gradient(135deg,var(--accent),var(--accent3),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-subtitle{
+  font-size:clamp(1rem,2.5vw,1.3rem);color:var(--text2);
+  line-height:1.7;margin-bottom:48px;max-width:600px;margin-inline:auto;
+  animation:fadeUp 0.6s ease 0.2s both;
+}
+.hero-actions{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp 0.6s ease 0.3s both;
+}
+.btn-primary{
+  padding:16px 36px;background:linear-gradient(135deg,var(--accent),var(--accent3));
+  color:#000;border:none;border-radius:14px;font-size:16px;font-weight:900;
+  cursor:pointer;transition:all 0.3s;font-family:'Cairo',sans-serif;
+  box-shadow:0 8px 30px rgba(245,158,11,0.4);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(245,158,11,0.6);}
+.btn-secondary{
+  padding:16px 36px;background:transparent;
+  color:var(--text);border:1px solid var(--border2);border-radius:14px;font-size:16px;font-weight:700;
+  cursor:pointer;transition:all 0.3s;font-family:'Cairo',sans-serif;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);background:var(--glow2);}
+.hero-stats{
+  display:flex;gap:40px;justify-content:center;margin-top:60px;
+  border-top:1px solid var(--border);padding-top:40px;
+  animation:fadeUp 0.6s ease 0.4s both;
+  flex-wrap:wrap;
+}
+.hero-stat{text-align:center;}
+.hero-stat-num{font-size:2.5rem;font-weight:900;color:var(--accent);}
+.hero-stat-label{font-size:13px;color:var(--text3);font-weight:600;margin-top:4px;}
+
+/* ===== FLOATING GRID ===== */
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+}
+
+/* ===== SECTIONS ===== */
+section{padding:80px 0;position:relative;z-index:1;}
+.container{max-width:1300px;margin:0 auto;padding:0 24px;}
+.section-header{text-align:center;margin-bottom:60px;}
+.section-label{
+  display:inline-block;
+  font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:16px;
+}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:white;margin-bottom:16px;}
+.section-sub{font-size:1rem;color:var(--text3);max-width:500px;margin:0 auto;line-height:1.7;}
+
+/* ===== CATEGORIES ===== */
+.categories{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:40px;}
+.cat-btn{
+  padding:10px 22px;border-radius:50px;
+  background:var(--card2);border:1px solid var(--border2);
+  color:var(--text2);font-size:13px;font-weight:700;
+  cursor:pointer;transition:all 0.25s;font-family:'Cairo',sans-serif;
+  display:flex;align-items:center;gap:8px;
+}
+.cat-btn:hover,.cat-btn.active{
+  background:var(--glow);border-color:var(--accent);color:var(--accent);
+}
+
+/* ===== SEARCH ===== */
+.search-wrap{position:relative;max-width:600px;margin:0 auto 48px;}
+.search-wrap input{
+  width:100%;padding:16px 24px 16px 56px;
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:16px;color:var(--text);font-size:15px;
+  font-family:'Cairo',sans-serif;transition:all 0.3s;outline:none;
+}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,158,11,0.1);}
+.search-wrap input::placeholder{color:var(--text3);}
+.search-icon{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:18px;}
+
+/* ===== PRODUCTS GRID ===== */
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+}
+.product-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);
+  overflow:hidden;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  position:relative;cursor:pointer;
+  opacity:0;transform:translateY(20px);
+}
+.product-card.visible{opacity:1;transform:translateY(0);}
+.product-card:hover{
+  border-color:rgba(245,158,11,0.3);
+  box-shadow:0 30px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(245,158,11,0.1);
+  transform:translateY(-6px);
+}
+.product-badge{
+  position:absolute;top:14px;right:14px;z-index:2;
+  padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;
+}
+.badge-new{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3);}
+.badge-hot{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3);}
+.badge-sale{background:rgba(245,158,11,0.15);color:var(--accent);border:1px solid rgba(245,158,11,0.3);}
+.product-img-wrap{
+  height:200px;background:var(--card2);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.product-img-wrap::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40px;
+  background:linear-gradient(to bottom,transparent,var(--card));
+}
+.product-img-wrap img{
+  width:100%;height:100%;object-fit:contain;
+  padding:16px;transition:transform 0.4s ease;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+.product-card:hover .product-img-wrap img{transform:scale(1.08);}
+.product-body{padding:20px;}
+.product-category{font-size:11px;color:var(--text3);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.product-name{font-size:15px;font-weight:700;color:white;margin-bottom:8px;line-height:1.4;}
+.product-desc{font-size:13px;color:var(--text3);line-height:1.6;margin-bottom:16px;}
+.product-footer{display:flex;align-items:center;justify-content:space-between;}
+.product-price{font-size:22px;font-weight:900;color:var(--accent);font-family:'JetBrains Mono',monospace;}
+.add-btn{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  border:none;color:#000;font-size:22px;font-weight:900;
+  cursor:pointer;transition:all 0.2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.add-btn:hover{transform:scale(1.1);box-shadow:0 8px 20px rgba(245,158,11,0.5);}
+.product-rating{display:flex;align-items:center;gap:4px;margin-bottom:12px;}
+.stars{color:var(--accent);font-size:12px;}
+.rating-count{font-size:12px;color:var(--text3);}
+
+/* ===== CART SIDEBAR ===== */
+.cart-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(4px);z-index:2000;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-sidebar{
+  position:fixed;top:0;right:-100%;width:420px;max-width:100vw;
+  height:100vh;background:var(--bg2);
+  border-left:1px solid var(--border2);
+  z-index:2001;transition:right 0.4s cubic-bezier(0.4,0,0.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-20px 0 60px rgba(0,0,0,0.8);
+}
+.cart-sidebar.open{right:0;}
+.cart-header{
+  padding:24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cart-title{font-size:20px;font-weight:900;color:white;display:flex;align-items:center;gap:10px;}
+.cart-close{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text2);font-size:18px;
+  transition:all 0.2s;
+}
+.cart-close:hover{background:rgba(239,68,68,0.1);border-color:var(--red);color:var(--red);}
+.cart-items{flex:1;overflow-y:auto;padding:20px;}
+.cart-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;color:var(--text3);
+}
+.cart-empty-icon{font-size:60px;margin-bottom:16px;opacity:0.3;}
+.cart-item{
+  display:flex;gap:14px;padding:16px;
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  margin-bottom:12px;position:relative;
+}
+.cart-item-img{
+  width:60px;height:60px;border-radius:10px;
+  background:var(--card2);object-fit:contain;padding:6px;flex-shrink:0;
+}
+.cart-item-info{flex:1;}
+.cart-item-name{font-size:14px;font-weight:700;color:white;margin-bottom:4px;}
+.cart-item-price{font-size:16px;font-weight:900;color:var(--accent);font-family:'JetBrains Mono',monospace;}
+.cart-item-qty{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.qty-btn{
+  width:28px;height:28px;border-radius:8px;
+  background:var(--card2);border:1px solid var(--border2);
+  color:var(--text);cursor:pointer;font-size:16px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;transition:all 0.2s;
+}
+.qty-btn:hover{border-color:var(--accent);color:var(--accent);}
+.qty-num{font-size:14px;font-weight:700;min-width:20px;text-align:center;}
+.cart-item-remove{
+  position:absolute;top:12px;left:12px;
+  width:28px;height:28px;border-radius:8px;
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);
+  color:var(--red);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all 0.2s;
+}
+.cart-item-remove:hover{background:var(--red);color:white;}
+.cart-footer{
+  padding:24px;border-top:1px solid var(--border);
+  background:var(--bg);
+}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.cart-total-label{color:var(--text2);font-size:14px;}
+.cart-total-val{color:white;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.cart-grand{margin:16px 0;padding:16px;background:var(--card);border-radius:12px;border:1px solid var(--border2);}
+.cart-grand .cart-total-label{font-size:16px;font-weight:700;color:var(--text);}
+.cart-grand .cart-total-val{font-size:22px;color:var(--accent);}
+.order-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  color:white;border:none;border-radius:14px;font-size:16px;font-weight:900;
+  cursor:pointer;transition:all 0.3s;font-family:'Cairo',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 8px 25px rgba(37,211,102,0.3);
+}
+.order-btn:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(37,211,102,0.5);}
+.order-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+
+/* ===== MODAL ===== */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(8px);z-index:3000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;padding:20px;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);
+  width:100%;max-width:460px;
+  transform:scale(0.9) translateY(20px);
+  transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 40px 80px rgba(0,0,0,0.9);
+  overflow:hidden;
+}
+.modal-overlay.open .modal{transform:scale(1) translateY(0);}
+.modal-header{
+  padding:28px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg3);
+}
+.modal-title{font-size:20px;font-weight:900;color:white;}
+.modal-close{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text2);font-size:18px;transition:all 0.2s;
+}
+.modal-close:hover{background:rgba(239,68,68,0.1);border-color:var(--red);color:var(--red);}
+.modal-body{padding:32px;}
+.tabs{display:flex;background:var(--card);border-radius:12px;padding:4px;margin-bottom:28px;}
+.tab{
+  flex:1;padding:10px;text-align:center;border-radius:10px;
+  cursor:pointer;font-size:14px;font-weight:700;
+  transition:all 0.25s;color:var(--text2);
+}
+.tab.active{background:var(--glow);color:var(--accent);}
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px;}
+.form-input{
+  width:100%;padding:14px 16px;
+  background:var(--card2);border:1px solid var(--border2);border-radius:12px;
+  color:var(--text);font-size:15px;font-family:'Cairo',sans-serif;
+  outline:none;transition:all 0.3s;
+}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,158,11,0.1);}
+.form-input::placeholder{color:var(--text3);}
+.auth-btn{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  color:#000;border:none;border-radius:12px;font-size:16px;font-weight:900;
+  cursor:pointer;transition:all 0.3s;font-family:'Cairo',sans-serif;
+  box-shadow:0 6px 20px rgba(245,158,11,0.3);
+}
+.auth-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(245,158,11,0.5);}
+.error-msg{color:var(--red);font-size:13px;margin-top:-12px;margin-bottom:12px;display:none;}
+.success-msg{color:var(--green);font-size:13px;margin-top:-12px;margin-bottom:12px;display:none;}
+
+/* ===== TOAST ===== */
+.toast-container{position:fixed;bottom:24px;left:24px;z-index:9000;display:flex;flex-direction:column;gap:10px;}
+.toast{
+  padding:14px 20px;border-radius:14px;
+  background:var(--card2);border:1px solid var(--border2);
+  color:var(--text);font-size:14px;font-weight:600;
+  display:flex;align-items:center;gap:10px;min-width:280px;
+  transform:translateX(-100%);opacity:0;
+  transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+.toast.show{transform:translateX(0);opacity:1;}
+.toast.success{border-color:rgba(16,185,129,0.4);background:rgba(16,185,129,0.1);}
+.toast.error{border-color:rgba(239,68,68,0.4);background:rgba(239,68,68,0.1);}
+.toast.info{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.08);}
+
+/* ===== ORDERS TABLE ===== */
+.orders-section{padding:80px 0;}
+.orders-table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden;}
+.orders-table{width:100%;border-collapse:collapse;}
+.orders-table th{
+  padding:16px 20px;background:var(--card2);
+  color:var(--text2);font-size:13px;font-weight:700;
+  text-align:right;border-bottom:1px solid var(--border);
+}
+.orders-table td{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  font-size:14px;color:var(--text);
+}
+.orders-table tr:last-child td{border-bottom:none;}
+.orders-table tr:hover td{background:var(--card2);}
+.order-status{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:50px;font-size:12px;font-weight:700;
+}
+.status-done{background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.3);}
+.status-pending{background:rgba(245,158,11,0.1);color:var(--accent);border:1px solid rgba(245,158,11,0.3);}
+.no-orders{text-align:center;padding:60px;color:var(--text3);}
+.no-orders-icon{font-size:50px;display:block;margin-bottom:12px;opacity:0.3;}
+
+/* ===== CONTACT ===== */
+#contact{background:var(--bg2);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+.contact-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);
+  padding:32px;transition:all 0.3s;
+}
+.contact-card:hover{border-color:rgba(245,158,11,0.2);box-shadow:0 20px 50px rgba(0,0,0,0.4);}
+.contact-icon{font-size:40px;margin-bottom:16px;}
+.contact-label{font-size:13px;color:var(--text3);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.contact-value{font-size:18px;font-weight:700;color:white;}
+.contact-value a{color:var(--accent);text-decoration:none;}
+.contact-value a:hover{text-decoration:underline;}
+.social-links{display:flex;gap:12px;margin-top:24px;}
+.social-link{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--card2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;text-decoration:none;transition:all 0.2s;
+}
+.social-link:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,0.4);}
+.contact-form-wrap{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:32px;
+}
+.contact-form-title{font-size:20px;font-weight:900;color:white;margin-bottom:24px;}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img{
+  width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--radius2);
+  border:2px solid rgba(245,158,11,0.2);
+}
+.about-glow{
+  position:absolute;inset:-20px;
+  background:radial-gradient(circle,rgba(245,158,11,0.1) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.about-text h3{font-size:2rem;font-weight:900;color:white;margin-bottom:16px;}
+.about-text p{font-size:1rem;color:var(--text2);line-height:1.8;margin-bottom:24px;}
+.about-skills{display:flex;flex-wrap:wrap;gap:10px;}
+.skill-tag{
+  padding:8px 16px;background:var(--glow2);border:1px solid rgba(245,158,11,0.2);
+  border-radius:50px;font-size:13px;color:var(--accent);font-weight:700;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--bg3);border-top:1px solid var(--border);
+  padding:40px 0;text-align:center;
+}
+.footer-logo{font-size:24px;font-weight:900;color:white;margin-bottom:8px;}
+.footer-logo span{color:var(--accent);}
+.footer-sub{color:var(--text3);font-size:14px;}
+.footer-links{display:flex;gap:20px;justify-content:center;margin:20px 0;flex-wrap:wrap;}
+.footer-links a{color:var(--text2);text-decoration:none;font-size:14px;transition:color 0.2s;}
+.footer-links a:hover{color:var(--accent);}
+.footer-bottom{color:var(--text3);font-size:13px;padding-top:20px;border-top:1px solid var(--border);margin-top:20px;}
+
+/* ===== PRODUCT MODAL ===== */
+.product-modal{max-width:700px;}
+.product-modal-img{
+  width:100%;height:280px;object-fit:contain;
+  background:var(--card2);border-radius:var(--radius);padding:20px;
+  margin-bottom:24px;
+}
+.product-modal-name{font-size:24px;font-weight:900;color:white;margin-bottom:8px;}
+.product-modal-desc{color:var(--text2);line-height:1.7;margin-bottom:20px;}
+.product-modal-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+.meta-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.meta-label{font-size:12px;color:var(--text3);font-weight:700;margin-bottom:4px;}
+.meta-value{font-size:14px;font-weight:700;color:var(--text);}
+.product-modal-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.product-modal-price{font-size:32px;font-weight:900;color:var(--accent);font-family:'JetBrains Mono',monospace;}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+
+/* ===== PROFILE ===== */
+.user-menu{
+  position:absolute;top:calc(100% + 10px);right:0;
+  background:var(--bg2);border:1px solid var(--border2);border-radius:16px;
+  padding:8px;min-width:220px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.7);
+  opacity:0;pointer-events:none;transform:translateY(-10px);
+  transition:all 0.25s;z-index:100;
+}
+.user-menu.open{opacity:1;pointer-events:all;transform:translateY(0);}
+.user-menu-header{padding:12px 16px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.user-menu-name{font-size:15px;font-weight:700;color:white;}
+.user-menu-email{font-size:12px;color:var(--text3);}
+.user-menu-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px;border-radius:10px;
+  cursor:pointer;font-size:14px;color:var(--text2);
+  transition:all 0.2s;
+}
+.user-menu-item:hover{background:var(--glow2);color:var(--accent);}
+.user-menu-item.danger:hover{background:rgba(239,68,68,0.1);color:var(--red);}
+.user-btn-wrap{position:relative;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .contact-grid{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;text-align:center;}
+  .about-img-wrap{max-width:300px;margin:0 auto;}
+  .about-skills{justify-content:center;}
+}
+@media(max-width:768px){
+  nav{display:none;}
+  .hamburger{display:flex;}
+  .hero-stats{gap:24px;}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));}
+  .cart-sidebar{width:100vw;}
+  header{padding:0 16px;}
+}
+@media(max-width:480px){
+  .hero-title{font-size:2rem;}
+  .hero-actions{flex-direction:column;align-items:center;}
+  .btn-primary,.btn-secondary{width:100%;max-width:300px;}
+  .products-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:16px;}
+  .hero-stat-num{font-size:1.8rem;}
+  section{padding:60px 0;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== PARTICLES ===== -->
+<div id="particles"></div>
+
+<!-- ===== HEADER ===== -->
+<header id="mainHeader">
+  <a class="logo" href="#">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">عمر <span>Store</span></div>
+  </a>
+  <nav id="mainNav">
+    <a href="#hero" class="active" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+    <a href="#products" data-ar="المنتجات" data-en="Products">المنتجات</a>
+    <a href="#orders" data-ar="طلباتي" data-en="My Orders">طلباتي</a>
+    <a href="#contact" data-ar="تواصل" data-en="Contact">تواصل</a>
+    <a href="#about" data-ar="عني" data-en="About">عني</a>
+  </nav>
+  <div class="nav-controls">
+    <div class="btn-icon" onclick="toggleLang()" id="langBtn" title="Language">🇺🇸</div>
+    <div class="btn-icon" onclick="toggleMode()" id="modeBtn" title="Theme">🌙</div>
+    <div class="btn-icon cart-btn" onclick="openCart()" title="Cart">
+      🛒<span class="cart-badge" id="cartBadge">0</span>
+    </div>
+    <div class="user-btn-wrap" id="userBtnWrap">
+      <button class="login-btn" onclick="openAuthModal()" id="loginBtn">تسجيل دخول</button>
+      <div class="user-menu" id="userMenu">
+        <div class="user-menu-header">
+          <div class="user-menu-name" id="menuName">عمر محمد</div>
+          <div class="user-menu-email" id="menuEmail">user@example.com</div>
+        </div>
+        <div class="user-menu-item" onclick="scrollToOrders()">📋 طلباتي</div>
+        <div class="user-menu-item danger" onclick="logout()">🚪 تسجيل خروج</div>
+      </div>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MOBILE NAV ===== -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#hero" onclick="closeMobileNav()">🏠 الرئيسية</a>
+  <a href="#products" onclick="closeMobileNav()">📦 المنتجات</a>
+  <a href="#orders" onclick="closeMobileNav()">📋 طلباتي</a>
+  <a href="#contact" onclick="closeMobileNav()">📞 تواصل</a>
+  <a href="#about" onclick="closeMobileNav()">👤 عني</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">أفضل متجر إلكترونيات في مصر</div>
+    <h1 class="hero-title">
+      كل ما تحتاجه من<br><span class="gold">سنسورات ومكونات</span><br>في مكان واحد
+    </h1>
+    <p class="hero-subtitle">أحدث سنسورات Arduino وRaspberry Pi بأعلى جودة وأرخص الأسعار مع شحن سريع ودعم برمجة مجاني 🚀</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">تصفح المنتجات ←</button>
+      <button class="btn-secondary" onclick="openAuthModal()">انضم مجاناً</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num" data-target="500">0</div><div class="hero-stat-label">منتج متاح</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" data-target="2000">0</div><div class="hero-stat-label">عميل راضي</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" data-target="5000">0</div><div class="hero-stat-label">طلب مكتمل</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" data-target="99">0</div><div class="hero-stat-label">% جودة مضمونة</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS ===== -->
+<section id="products">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">كتالوج المنتجات</div>
+      <h2 class="section-title">أحدث وأفضل المكونات الإلكترونية</h2>
+      <p class="section-sub">مجموعة ضخمة من السنسورات والمكونات لكل مشاريعك</p>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="ابحث... PIR, ultrasonic, relay, LCD, RFID..." oninput="filterProducts()">
+    </div>
+    <div class="categories">
+      <div class="cat-btn active" data-cat="all" onclick="filterCat(this,'all')">🔵 الكل</div>
+      <div class="cat-btn" data-cat="sensors" onclick="filterCat(this,'sensors')">📡 سنسورات</div>
+      <div class="cat-btn" data-cat="displays" onclick="filterCat(this,'displays')">🖥️ شاشات</div>
+      <div class="cat-btn" data-cat="motors" onclick="filterCat(this,'motors')">⚙️ موتورات</div>
+      <div class="cat-btn" data-cat="wireless" onclick="filterCat(this,'wireless')">📶 لاسلكي</div>
+      <div class="cat-btn" data-cat="power" onclick="filterCat(this,'power')">⚡ طاقة</div>
+      <div class="cat-btn" data-cat="audio" onclick="filterCat(this,'audio')">🔊 صوت</div>
+      <div class="cat-btn" data-cat="control" onclick="filterCat(this,'control')">🎛️ تحكم</div>
+      <div class="cat-btn" data-cat="cameras" onclick="filterCat(this,'cameras')">📷 كاميرات</div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</section>
+
+<!-- ===== ORDERS ===== -->
+<section id="orders" class="orders-section" style="background:var(--bg2);">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">سجل العمليات</div>
+      <h2 class="section-title">طلباتي السابقة</h2>
+    </div>
+    <div class="orders-table-wrap">
+      <table class="orders-table" id="ordersTable">
+        <thead>
+          <tr>
+            <th>رقم الطلب</th>
+            <th>التاريخ</th>
+            <th>المنتجات</th>
+            <th>الإجمالي</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">تواصل معنا</div>
+      <h2 class="section-title">نحن هنا من أجلك</h2>
+      <p class="section-sub">أي استفسار أو مشكلة، تواصل معنا على الفور</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-card" style="margin-bottom:20px;">
+          <div class="contact-icon">📞</div>
+          <div class="contact-label">هاتف / واتساب</div>
+          <div class="contact-value"><a href="tel:01285590979">01285590979</a></div>
+          <div class="social-links">
+            <a class="social-link" href="https://wa.me/201285590979" target="_blank" title="WhatsApp">💬</a>
+            <a class="social-link" href="tel:01285590979" title="Call">📞</a>
+          </div>
+        </div>
+        <div class="contact-card" style="margin-bottom:20px;">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-label">البريد الإلكتروني</div>
+          <div class="contact-value"><a href="mailto:oabdelrahman851@gmail.com">oabdelrahman851@gmail.com</a></div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <div class="contact-label">الموقع</div>
+          <div class="contact-value">الإسكندرية، مصر</div>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <div class="contact-form-title">أرسل رسالة مباشرة</div>
+        <div class="form-group">
+          <label class="form-label">الاسم</label>
+          <input type="text" class="form-input" id="contactName" placeholder="اسمك هنا">
+        </div>
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" id="contactEmail" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الرسالة</label>
+          <textarea class="form-input" id="contactMsg" rows="4" placeholder="اكتب رسالتك هنا..." style="resize:vertical;"></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;" onclick="sendContact()">إرسال الرسالة ✉️</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" style="background:var(--bg3);">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <div class="about-glow"></div>
+        <img class="about-img" src="https://i.imgur.com/JHbODWs.jpg" onerror="this.style.background='linear-gradient(135deg,#1a1a2e,#f59e0b33)';this.src=''" alt="عمر">
+      </div>
+      <div class="about-text">
+        <h3>أنا عمر عبد الرحمن 👋</h3>
+        <p>مهندس إلكترونيات وعاشق Arduino من سنين 🔥 عملت مئات المشاريع الذكية والروبوتات. المتجر ده عشان أوفرلكم أحسن سنسورات ومكونات بأرخص الأسعار مع شحن سريع ودعم برمجة مجاني.</p>
+        <p>بتخصص في مشاريع IoT وأتمتة المنزل والروبوتات. استني هساعدك في أي مشروع من الصفر للنهاية 🚀</p>
+        <div class="about-skills">
+          <span class="skill-tag">Arduino</span>
+          <span class="skill-tag">Raspberry Pi</span>
+          <span class="skill-tag">ESP32/8266</span>
+          <span class="skill-tag">IoT Systems</span>
+          <span class="skill-tag">Robotics</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C/C++</span>
+          <span class="skill-tag">PCB Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">عمر <span>Store</span> ⚡</div>
+    <div class="footer-sub">متجر السنسورات والمكونات الإلكترونية الأول في مصر</div>
+    <div class="footer-links">
+      <a href="#hero">الرئيسية</a>
+      <a href="#products">المنتجات</a>
+      <a href="#contact">تواصل</a>
+      <a href="#about">عني</a>
+      <a href="https://wa.me/201285590979" target="_blank">واتساب</a>
+    </div>
+    <div class="footer-bottom">© 2025 متجر عمر للإلكترونيات - جميع الحقوق محفوظة</div>
+  </div>
+</footer>
+
+<!-- ===== CART SIDEBAR ===== -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <div class="cart-title">🛒 <span>السلة</span></div>
+    <div class="cart-close" onclick="closeCart()">✕</div>
+  </div>
+  <div class="cart-items" id="cartItemsWrap"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total-row">
+      <span class="cart-total-label">عدد المنتجات</span>
+      <span class="cart-total-val" id="cartCount">0</span>
+    </div>
+    <div class="cart-total-row">
+      <span class="cart-total-label">الشحن</span>
+      <span class="cart-total-val" style="color:var(--green);">مجاناً 🎉</span>
+    </div>
+    <div class="cart-grand cart-total-row">
+      <span class="cart-total-label">الإجمالي</span>
+      <span class="cart-total-val" id="cartTotal">$0</span>
+    </div>
+    <button class="order-btn" onclick="checkout()">
+      <span>📱</span> إتمام الطلب عبر واتساب
+    </button>
+  </div>
+</div>
+
+<!-- ===== AUTH MODAL ===== -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">⚡ حساب متجر عمر</div>
+      <div class="modal-close" onclick="closeAuthModal()">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <div class="tab active" id="tab-login" onclick="switchTab('login')">تسجيل دخول</div>
+        <div class="tab" id="tab-register" onclick="switchTab('register')">حساب جديد</div>
+      </div>
+      <!-- LOGIN -->
+      <div id="loginForm">
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" id="loginEmail" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">كلمة السر</label>
+          <input type="password" class="form-input" id="loginPass" placeholder="••••••••">
+        </div>
+        <div class="error-msg" id="loginError">❌ البيانات غلط، حاول تاني</div>
+        <button class="auth-btn" onclick="doLogin()">دخول</button>
+      </div>
+      <!-- REGISTER -->
+      <div id="registerForm" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">الاسم الكامل</label>
+          <input type="text" class="form-input" id="regName" placeholder="اسمك هنا">
+        </div>
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" id="regEmail" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">رقم الهاتف</label>
+          <input type="tel" class="form-input" id="regPhone" placeholder="010xxxxxxxx">
+        </div>
+        <div class="form-group">
+          <label class="form-label">كلمة السر</label>
+          <input type="password" class="form-input" id="regPass" placeholder="••••••••">
+        </div>
+        <div class="error-msg" id="registerError">❌ خطأ في التسجيل</div>
+        <div class="success-msg" id="registerSuccess">✅ تم التسجيل! سجل دخولك الآن</div>
+        <button class="auth-btn" onclick="doRegister()">إنشاء حساب</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRODUCT DETAIL MODAL ===== -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal product-modal">
+    <div class="modal-header">
+      <div class="modal-title" id="pModalTitle">تفاصيل المنتج</div>
+      <div class="modal-close" onclick="closeProductModal()">✕</div>
+    </div>
+    <div class="modal-body">
+      <img class="product-modal-img" id="pModalImg" src="" alt="">
+      <div class="product-modal-name" id="pModalName"></div>
+      <div class="product-modal-desc" id="pModalDesc"></div>
+      <div class="product-modal-meta" id="pModalMeta"></div>
+      <div class="product-modal-footer">
+        <div class="product-modal-price" id="pModalPrice"></div>
+        <button class="btn-primary" onclick="addFromModal()" style="padding:14px 28px;font-size:15px;">+ أضف للسلة</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ==================== DATA ====================
+const PRODUCTS = [
+  // SENSORS
+  {id:1,cat:'sensors',name:'PIR Motion Sensor HC-SR501',nameEn:'PIR Motion Sensor HC-SR501',desc:'كشف حركة الإنسان بدقة عالية - مثالي لأنظمة الإنذار والإضاءة التلقائية',descEn:'High accuracy human motion detection - perfect for alarms and auto-lighting',price:3.5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/PIR_Sensor.jpg/320px-PIR_Sensor.jpg',badge:'hot',rating:4.8,reviews:124,voltage:'3.3-5V',range:'3-7m',icon:'📡'},
+  {id:2,cat:'sensors',name:'Ultrasonic Sensor HC-SR04',nameEn:'Ultrasonic Sensor HC-SR04',desc:'قياس المسافة بدقة من 2سم حتى 4م - مثالي للروبوتات وأنظمة تجنب العوائق',descEn:'Distance measurement 2cm-4m - great for robots',price:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Ultrasonic_distance_sensor_-_HC-SR04_-_P1530423.jpg/320px-Ultrasonic_distance_sensor_-_HC-SR04_-_P1530423.jpg',badge:'new',rating:4.9,reviews:208,voltage:'5V',range:'2cm-4m',icon:'📏'},
+  {id:3,cat:'sensors',name:'DHT11 Temperature & Humidity',nameEn:'DHT11 Temp & Humidity Sensor',desc:'قياس درجة الحرارة والرطوبة في نفس الوقت بدقة عالية وسعر ممتاز',descEn:'Simultaneous temperature and humidity measurement',price:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/DHT11_Humidity_%26_Temperature_Sensor_%2814601343917%29.jpg/320px-DHT11_Humidity_%26_Temperature_Sensor_%2814601343917%29.jpg',badge:'',rating:4.7,reviews:186,voltage:'3.3-5V',range:'N/A',icon:'🌡️'},
+  {id:4,cat:'sensors',name:'Gas Sensor MQ-2',nameEn:'Gas/Smoke Sensor MQ-2',desc:'كشف الغازات القابلة للاشتعال والدخان - ضروري لأنظمة السلامة المنزلية',descEn:'Detect flammable gases and smoke for safety systems',price:4,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/MQ-2_Gas_Sensor_Module.jpg/320px-MQ-2_Gas_Sensor_Module.jpg',badge:'',rating:4.6,reviews:97,voltage:'5V',range:'100-10000ppm',icon:'💨'},
+  {id:5,cat:'sensors',name:'Light Sensor LDR Module',nameEn:'LDR Light Sensor Module',desc:'كشف شدة الإضاءة المحيطة - لأنظمة الإضاءة التلقائية والطاقة الشمسية',descEn:'Ambient light detection for auto-lighting systems',price:2,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/LDR_1480405_6_7_HDR_Enhancer_1.jpg/320px-LDR_1480405_6_7_HDR_Enhancer_1.jpg',badge:'sale',rating:4.5,reviews:143,voltage:'3.3-5V',range:'N/A',icon:'💡'},
+  {id:6,cat:'sensors',name:'IR Obstacle Avoidance Sensor',nameEn:'IR Obstacle Avoidance Sensor',desc:'كشف العوائق للروبوتات والسيارات الذكية - مدى 2-30سم قابل للضبط',descEn:'Obstacle detection for robots and smart cars',price:2.5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Sharp_IR_sensor.jpg/320px-Sharp_IR_sensor.jpg',badge:'',rating:4.4,reviews:88,voltage:'3.3-5V',range:'2-30cm',icon:'🤖'},
+  {id:7,cat:'sensors',name:'IR Receiver Module TSOP4838',nameEn:'IR Receiver Module TSOP4838',desc:'استقبال إشارات الريموت كنترول - يعمل مع كل ريموت يستخدم infrared',descEn:'Receive remote control signals - works with all IR remotes',price:1.5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Infrared_sensor.jpg/320px-Infrared_sensor.jpg',badge:'',rating:4.3,reviews:64,voltage:'5V',range:'N/A',icon:'📺'},
+  {id:8,cat:'sensors',name:'Soil Moisture Sensor',nameEn:'Soil Moisture Sensor',desc:'قياس رطوبة التربة للزراعة الذكية وأنظمة الري التلقائي',descEn:'Measure soil moisture for smart farming and irrigation',price:2.5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Soil_Moisture_Sensor.jpg/320px-Soil_Moisture_Sensor.jpg',badge:'new',rating:4.6,reviews:112,voltage:'3.3-5V',range:'N/A',icon:'🌱'},
+  {id:9,cat:'sensors',name:'Rain Sensor Module',nameEn:'Rain Drop Sensor Module',desc:'كشف المطر والمياه - لأنظمة إغلاق النوافذ والشبابيك التلقائية',descEn:'Detect rain and water for automatic window closing',price:2,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tipping_bucket_rain_gauge.jpg/320px-Tipping_bucket_rain_gauge.jpg',badge:'',rating:4.2,reviews:55,voltage:'3.3-5V',range:'N/A',icon:'🌧️'},
+  {id:10,cat:'sensors',name:'Flame Sensor Module',nameEn:'Flame Sensor Module',desc:'كشف النيران لأنظمة الإنذار من الحريق في المنازل والمصانع',descEn:'Flame detection for fire alarm systems',price:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Flame_sensor_arduino.jpg/320px-Flame_sensor_arduino.jpg',badge:'hot',rating:4.7,reviews:78,voltage:'3.3-5V',range:'0.5-1m',icon:'🔥'},
+  {id:11,cat:'sensors',name:'Vibration Sensor SW-420',nameEn:'Vibration Sensor SW-420',desc:'كشف الاهتزازات والصدمات - لأنظمة إنذار السرقة وحماية الأجهزة',descEn:'Detect vibrations and shocks for theft alarms',price:2,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Piezoelectric_accelerometer.jpg/320px-Piezoelectric_accelerometer.jpg',badge:'',rating:4.3,reviews:45,voltage:'3.3-5V',range:'N/A',icon:'📳'},
+  {id:12,cat:'sensors',name:'Hall Effect Sensor',nameEn:'Hall Effect Magnetic Sensor',desc:'كشف المجال المغناطيسي - لقياس سرعة المحركات وحالة الأبواب',descEn:'Detect magnetic fields for motor speed and door status',price:2,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Hall-effect-sensor.jpg/320px-Hall-effect-sensor.jpg',badge:'',rating:4.1,reviews:38,voltage:'4.5-28V',range:'N/A',icon:'🧲'},
+  // DISPLAYS
+  {id:13,cat:'displays',name:'LCD Display 16x2 with I2C',nameEn:'LCD 16x2 with I2C Module',desc:'شاشة عرض نصوص 16 حرف × 2 سطر مع وحدة I2C لتوفير توصيلات أقل',descEn:'16x2 LCD display with I2C module for fewer connections',price:5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/LCD_HD44780.jpg/320px-LCD_HD44780.jpg',badge:'hot',rating:4.8,reviews:234,voltage:'5V',range:'N/A',icon:'🖥️'},
+  {id:14,cat:'displays',name:'OLED Display 0.96" I2C',nameEn:'0.96 inch OLED Display',desc:'شاشة OLED عالية الدقة 128x64 بكسل - كونتراست ممتاز وتشغيل بـ3.3V',descEn:'High resolution 128x64 OLED display with excellent contrast',price:5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/SSD1306_OLED_module.jpg/320px-SSD1306_OLED_module.jpg',badge:'new',rating:4.9,reviews:187,voltage:'3.3-5V',range:'N/A',icon:'📟'},
+  {id:15,cat:'displays',name:'7-Segment Display 4-Digit',nameEn:'4 Digit 7-Segment Display',desc:'شاشة 7-segment 4 أرقام لعرض الأوقات والأرقام والتواريخ بوضوح',descEn:'4 digit 7-segment display for times and numbers',price:4,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/7_segment_display_labeled.svg/320px-7_segment_display_labeled.svg.png',badge:'',rating:4.5,reviews:92,voltage:'3.3-5V',range:'N/A',icon:'🔢'},
+  {id:16,cat:'displays',name:'TFT LCD 2.4" Touch Screen',nameEn:'2.4 inch TFT Touch Screen',desc:'شاشة ملونة لمسية 2.4 بوصة 240x320 بكسل مع SD card slot',descEn:'2.4 inch color touchscreen 240x320 with SD card slot',price:12,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/TFT_LCD_display.jpg/320px-TFT_LCD_display.jpg',badge:'new',rating:4.6,reviews:67,voltage:'3.3-5V',range:'N/A',icon:'📱'},
+  // MOTORS
+  {id:17,cat:'motors',name:'Servo Motor SG90',nameEn:'SG90 Micro Servo Motor',desc:'محرك سيرفو صغير دقيق للروبوتات والطائرات بدون طيار - 180 درجة دوران',descEn:'Precise mini servo for robots and drones - 180° rotation',price:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Micro_servo.jpg/320px-Micro_servo.jpg',badge:'',rating:4.7,reviews:312,voltage:'4.8-6V',range:'N/A',icon:'⚙️'},
+  {id:18,cat:'motors',name:'Stepper Motor 28BYJ-48',nameEn:'28BYJ-48 Stepper Motor + Driver',desc:'محرك خطوي مع درايفر ULN2003 - لحركة دقيقة في الطابعات والروبوتات',descEn:'Stepper motor with ULN2003 driver for precise movement',price:5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Bipolar_stepper_motor.jpg/320px-Bipolar_stepper_motor.jpg',badge:'hot',rating:4.6,reviews:148,voltage:'5V',range:'N/A',icon:'🔄'},
+  {id:19,cat:'motors',name:'DC Motor L298N Driver',nameEn:'L298N DC Motor Driver Module',desc:'درايفر محركات DC قوي يتحكم في موتورين في نفس الوقت بجهد حتى 35V',descEn:'Powerful DC motor driver for 2 motors up to 35V',price:6,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/L298N_motor_driver_board.jpg/320px-L298N_motor_driver_board.jpg',badge:'',rating:4.7,reviews:203,voltage:'5-35V',range:'N/A',icon:'🎛️'},
+  // WIRELESS
+  {id:20,cat:'wireless',name:'ESP8266 WiFi Module NodeMCU',nameEn:'ESP8266 NodeMCU WiFi Module',desc:'يضيف اتصال WiFi لأي مشروع - برمجة بـArduino IDE بسهولة تامة',descEn:'Add WiFi connectivity to any project - easy Arduino programming',price:7,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/ESP8266_01.jpg/320px-ESP8266_01.jpg',badge:'hot',rating:4.9,reviews:445,voltage:'3.3V',range:'N/A',icon:'📶'},
+  {id:21,cat:'wireless',name:'ESP32 Development Board',nameEn:'ESP32 WiFi + Bluetooth Board',desc:'بوردة ESP32 مع WiFi وBluetooth مدمجين - أقوى من ESP8266 بكتير',descEn:'ESP32 with built-in WiFi and Bluetooth - much more powerful than ESP8266',price:10,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/ESP32_Espressif_ESP-WROOM-32_Dev_Board.jpg/320px-ESP32_Espressif_ESP-WROOM-32_Dev_Board.jpg',badge:'new',rating:4.9,reviews:389,voltage:'3.3V',range:'N/A',icon:'🌐'},
+  {id:22,cat:'wireless',name:'HC-05 Bluetooth Module',nameEn:'HC-05 Bluetooth Module',desc:'وحدة Bluetooth لتحكم في مشاريعك من موبايلك لمسافة 10 أمتار',descEn:'Bluetooth module for wireless control up to 10 meters',price:5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Bluetooth_module_HC-05.jpg/320px-Bluetooth_module_HC-05.jpg',badge:'',rating:4.5,reviews:156,voltage:'3.3-5V',range:'10m',icon:'📡'},
+  {id:23,cat:'wireless',name:'NRF24L01 2.4GHz Module',nameEn:'NRF24L01 2.4GHz RF Module',desc:'تواصل لاسلكي 2.4GHz بمدى 100م - لمشاريع التحكم عن بُعد والـdrones',descEn:'2.4GHz wireless communication up to 100m range',price:4,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/NRF24L01_wireless_module.jpg/320px-NRF24L01_wireless_module.jpg',badge:'',rating:4.4,reviews:87,voltage:'1.9-3.6V',range:'100m',icon:'📻'},
+  {id:24,cat:'wireless',name:'433MHz RF Transmitter/Receiver',nameEn:'433MHz RF Transmitter & Receiver Set',desc:'مجموعة إرسال واستقبال 433MHz لمشاريع التحكم اللاسلكي بسعر رخيص',descEn:'433MHz TX/RX set for wireless control projects',price:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/433MHz_RF_modules.jpg/320px-433MHz_RF_modules.jpg',badge:'sale',rating:4.2,reviews:63,voltage:'3.3-12V',range:'100m',icon:'📡'},
+  // CONTROL
+  {id:25,cat:'control',name:'Relay Module 1 Channel',nameEn:'1 Channel Relay Module 5V',desc:'تحكم في الأجهزة الكهربائية عالية الجهد (220V) من الـArduino بسهولة',descEn:'Control 220V appliances directly from Arduino',price:2,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Single-relay-module.jpg/320px-Single-relay-module.jpg',badge:'',rating:4.6,reviews:267,voltage:'5V',range:'N/A',icon:'🔌'},
+  {id:26,cat:'control',name:'Relay Module 4 Channel',nameEn:'4 Channel Relay Module 5V',desc:'4 رليهات في موديول واحد للتحكم في 4 أجهزة كهربائية بشكل مستقل',descEn:'4 relays in one module to control 4 appliances independently',price:5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/4-channel-relay-module.jpg/320px-4-channel-relay-module.jpg',badge:'hot',rating:4.7,reviews:198,voltage:'5V',range:'N/A',icon:'🔌'},
+  {id:27,cat:'control',name:'RFID Module RC522',nameEn:'RC522 RFID Reader/Writer',desc:'قراءة وكتابة كروت RFID - لأنظمة التحكم في الدخول ومتابعة المخزون',descEn:'Read/write RFID cards for access control systems',price:5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/RFID.jpg/320px-RFID.jpg',badge:'',rating:4.6,reviews:134,voltage:'3.3V',range:'N/A',icon:'💳'},
+  {id:28,cat:'control',name:'Keypad 4x4 Matrix',nameEn:'4x4 Matrix Keypad',desc:'لوحة مفاتيح 16 زر لإدخال أرقام وكلمات سر وبيانات المستخدم',descEn:'16-button keypad for passwords and user data entry',price:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/4x4_membrane_matrix_keyboard.jpg/320px-4x4_membrane_matrix_keyboard.jpg',badge:'',rating:4.5,reviews:112,voltage:'3.3-5V',range:'N/A',icon:'⌨️'},
+  {id:29,cat:'control',name:'Joystick Module',nameEn:'Dual Axis Joystick Module',desc:'عصا تحكم ثنائية المحاور مع زر - لتحريك الروبوتات والتحكم في الألعاب',descEn:'Dual-axis joystick with button for robot control',price:2.5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Analog-stick.jpg/320px-Analog-stick.jpg',badge:'',rating:4.4,reviews:85,voltage:'5V',range:'N/A',icon:'🕹️'},
+  // POWER
+  {id:30,cat:'power',name:'Arduino UNO R3',nameEn:'Arduino UNO R3 Original',desc:'البورد الأساسية الأكثر استخداماً في العالم - مناسبة لكل المبتدئين والمحترفين',descEn:'The most widely used board in the world - perfect for beginners and pros',price:15,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Arduino_Uno_-_R3.jpg/320px-Arduino_Uno_-_R3.jpg',badge:'hot',rating:5.0,reviews:892,voltage:'5V/12V',range:'N/A',icon:'🟦'},
+  {id:31,cat:'power',name:'Arduino Nano V3',nameEn:'Arduino Nano V3.0',desc:'نفس قوة UNO في حجم أصغر بكتير - مثالي للمشاريع المدمجة والمحدودة المساحة',descEn:'Same power as UNO in a much smaller size - great for compact projects',price:8,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Arduino_nano.jpg/320px-Arduino_nano.jpg',badge:'new',rating:4.8,reviews:456,voltage:'5V',range:'N/A',icon:'🔵'},
+  {id:32,cat:'power',name:'Buck Converter Step-Down',nameEn:'DC-DC Buck Converter Module',desc:'محول جهد من أي جهد مرتفع لجهد منخفض - كفاءة 96% وتدرج سلس',descEn:'Convert any high voltage to lower voltage - 96% efficiency',price:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Buck_dc_dc_converter.jpg/320px-Buck_dc_dc_converter.jpg',badge:'',rating:4.5,reviews:127,voltage:'3-40V in',range:'1.5-35V out',icon:'⚡'},
+  {id:33,cat:'power',name:'18650 Battery Holder',nameEn:'18650 Battery Holder 2 Slots',desc:'حامل بطاريات 18650 لمشاريعك المحمولة مع مخرج USB وشاحن مدمج',descEn:'18650 battery holder for portable projects with USB output',price:4,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/18650_lithium_battery.jpg/320px-18650_lithium_battery.jpg',badge:'',rating:4.3,reviews:73,voltage:'7.4V out',range:'N/A',icon:'🔋'},
+  // AUDIO
+  {id:34,cat:'audio',name:'Buzzer Module Active',nameEn:'Active Buzzer Module',desc:'منبّه صوتي يعمل بجهد مباشر بدون إشارة - لتنبيهات الأنظمة والإنذارات',descEn:'Active buzzer that works on direct power - for alerts and alarms',price:1.5,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Buzzer.jpg/320px-Buzzer.jpg',badge:'',rating:4.3,reviews:156,voltage:'3.3-5V',range:'N/A',icon:'🔔'},
+  {id:35,cat:'audio',name:'DFPlayer Mini MP3',nameEn:'DFPlayer Mini MP3 Module',desc:'مشغل MP3 صغير مع SD card - شغّل ملفات صوت في مشاريعك بسهولة',descEn:'Mini MP3 player with SD card - play audio files easily',price:4,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/SD_card_2GB.jpg/320px-SD_card_2GB.jpg',badge:'new',rating:4.6,reviews:89,voltage:'3.3-5V',range:'N/A',icon:'🎵'},
+  {id:36,cat:'audio',name:'Sound Sensor KY-038',nameEn:'Sound Sensor Microphone Module',desc:'كشف الأصوات والضوضاء - لمشاريع الإضاءة بالتصفيق والإنذارات الصوتية',descEn:'Detect sound and noise for clap lighting and voice alarms',price:2,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Electret_condenser_microphone.jpg/320px-Electret_condenser_microphone.jpg',badge:'',rating:4.2,reviews:67,voltage:'3.3-5V',range:'N/A',icon:'🎤'},
+  // CAMERAS
+  {id:37,cat:'cameras',name:'ESP32-CAM Module',nameEn:'ESP32-CAM WiFi Camera Module',desc:'بوردة كاميرا مع WiFi مدمج - التقاط صور وبث فيديو عبر الإنترنت',descEn:'Camera board with built-in WiFi - capture photos and stream video',price:12,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/ESP32-CAM_module.jpg/320px-ESP32-CAM_module.jpg',badge:'hot',rating:4.7,reviews:234,voltage:'5V',range:'N/A',icon:'📷'},
+  {id:38,cat:'cameras',name:'OV7670 Camera Module',nameEn:'OV7670 Camera Module for Arduino',desc:'كاميرا VGA للـArduino - 640x480 بكسل لمشاريع رؤية الآلة والتصوير',descEn:'VGA camera for Arduino - 640x480 pixels for machine vision',price:8,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/OV7670_camera_module.jpg/320px-OV7670_camera_module.jpg',badge:'',rating:4.2,reviews:45,voltage:'3.3V',range:'N/A',icon:'🎥'},
+];
+
+// ==================== STATE ====================
+let cart = [];
+let currentLang = 'ar';
+let currentUser = null;
+let orders = [];
+let activeCat = 'all';
+let currentProductId = null;
+
+// ==================== INIT ====================
+function init(){
+  loadFromStorage();
+  renderProducts(PRODUCTS);
+  renderOrders();
+  updateCartUI();
+  createParticles();
+  animateStats();
+  
+  // Intersection observer for product cards
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+  },{threshold:0.1});
+  setTimeout(()=>document.querySelectorAll('.product-card').forEach(c=>observer.observe(c)),100);
+  
+  // Header scroll effect
+  window.addEventListener('scroll',()=>{
+    document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);
+    // Active nav
+    const sections=['hero','products','orders','contact','about'];
+    const links=document.querySelectorAll('nav a');
+    sections.forEach((id,i)=>{
+      const s=document.getElementById(id);
+      if(s){const r=s.getBoundingClientRect();if(r.top<=100&&r.bottom>=100){links.forEach(l=>l.classList.remove('active'));if(links[i])links[i].classList.add('active');}}
+    });
+  });
+}
+
+function loadFromStorage(){
+  try{
+    const u=localStorage.getItem('omarStore_user');
+    if(u){currentUser=JSON.parse(u);updateAuthUI();}
+    const o=localStorage.getItem('omarStore_orders');
+    if(o)orders=JSON.parse(o);
+    const c=localStorage.getItem('omarStore_cart');
+    if(c)cart=JSON.parse(c);
+  }catch(e){}
+}
+
+function saveToStorage(){
+  try{
+    if(currentUser)localStorage.setItem('omarStore_user',JSON.stringify(currentUser));
+    localStorage.setItem('omarStore_orders',JSON.stringify(orders));
+    localStorage.setItem('omarStore_cart',JSON.stringify(cart));
+  }catch(e){}
+}
+
+// ==================== PARTICLES ====================
+function createParticles(){
+  const container=document.getElementById('particles');
+  for(let i=0;i<25;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(8+Math.random()*15)+'s';
+    p.style.animationDelay=(Math.random()*10)+'s';
+    p.style.opacity=Math.random()*0.5;
+    container.appendChild(p);
+  }
+}
+
+// ==================== COUNTER ANIMATION ====================
+function animateStats(){
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target;
+        const target=parseInt(el.dataset.target);
+        animateCount(el,target);
+        observer.unobserve(el);
+      }
+    });
+  });
+  document.querySelectorAll('[data-target]').forEach(el=>observer.observe(el));
+}
+function animateCount(el,target){
+  let current=0;const step=target/60;const interval=setInterval(()=>{
+    current=Math.min(current+step,target);
+    el.textContent=Math.floor(current).toLocaleString('ar');
+    if(current>=target){el.textContent=target.toLocaleString('ar');clearInterval(interval);}
+  },16);
+}
+
+// ==================== PRODUCTS ====================
+function renderProducts(products){
+  const grid=document.getElementById('productsGrid');
+  grid.innerHTML='';
+  if(products.length===0){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text3);"><div style="font-size:50px;margin-bottom:12px;">🔍</div><div style="font-size:18px;">لا توجد منتجات مطابقة للبحث</div></div>';
+    return;
+  }
+  products.forEach((p,i)=>{
+    const card=document.createElement('div');
+    card.className='product-card';
+    card.style.transitionDelay=(i%8*0.05)+'s';
+    const badgeHTML=p.badge?`<div class="product-badge ${p.badge==='new'?'badge-new':p.badge==='hot'?'badge-hot':'badge-sale'}">${p.badge==='new'?'🆕 جديد':p.badge==='hot'?'🔥 رائج':'💰 خصم'}</div>`:'';
+    const stars='★'.repeat(Math.round(p.rating))+'☆'.repeat(5-Math.round(p.rating));
+    card.innerHTML=`
+      ${badgeHTML}
+      <div class="product-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;flex-direction:column;gap:8px;position:absolute;inset:0">
+          <div style="font-size:64px">${p.icon||'⚡'}</div>
+          <div style="font-size:11px;color:var(--text3);text-align:center;padding:0 16px;font-weight:700;line-height:1.4">${p.name}</div>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-category">${getCatLabel(p.cat)}</div>
+        <div class="product-name">${currentLang==='ar'?p.name:p.nameEn}</div>
+        <div class="product-rating">
+          <span class="stars">${stars}</span>
+          <span class="rating-count">(${p.reviews})</span>
+        </div>
+        <div class="product-desc">${(currentLang==='ar'?p.desc:p.descEn).substring(0,70)}...</div>
+        <div class="product-footer">
+          <div class="product-price">$${p.price}</div>
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(${p.id})">+</button>
+        </div>
+      </div>
+    `;
+    card.onclick=()=>openProductModal(p.id);
+    grid.appendChild(card);
+  });
+  // Re-observe
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+  },{threshold:0.05});
+  document.querySelectorAll('.product-card').forEach(c=>observer.observe(c));
+}
+
+function getCatLabel(cat){
+  const labels={sensors:'📡 سنسورات',displays:'🖥️ شاشات',motors:'⚙️ موتورات',wireless:'📶 لاسلكي',power:'⚡ طاقة',audio:'🔊 صوت',control:'🎛️ تحكم',cameras:'📷 كاميرات'};
+  return labels[cat]||cat;
+}
+
+function filterCat(btn,cat){
+  activeCat=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function filterProducts(){applyFilters();}
+
+function applyFilters(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  let filtered=PRODUCTS.filter(p=>{
+    const matchCat=activeCat==='all'||p.cat===activeCat;
+    const matchSearch=!q||p.name.toLowerCase().includes(q)||p.nameEn.toLowerCase().includes(q)||p.desc.includes(q)||p.cat.includes(q);
+    return matchCat&&matchSearch;
+  });
+  renderProducts(filtered);
+}
+
+// ==================== PRODUCT MODAL ====================
+function openProductModal(id){
+  currentProductId=id;
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p)return;
+  document.getElementById('pModalTitle').textContent=currentLang==='ar'?p.name:p.nameEn;
+  document.getElementById('pModalImg').src=p.img;
+  document.getElementById('pModalName').textContent=currentLang==='ar'?p.name:p.nameEn;
+  document.getElementById('pModalDesc').textContent=currentLang==='ar'?p.desc:p.descEn;
+  document.getElementById('pModalPrice').textContent='$'+p.price;
+  const stars='★'.repeat(Math.round(p.rating))+'☆'.repeat(5-Math.round(p.rating));
+  document.getElementById('pModalMeta').innerHTML=`
+    <div class="meta-item"><div class="meta-label">التقييم</div><div class="meta-value" style="color:var(--accent)">${stars} (${p.rating})</div></div>
+    <div class="meta-item"><div class="meta-label">عدد المراجعات</div><div class="meta-value">${p.reviews} مراجعة</div></div>
+    <div class="meta-item"><div class="meta-label">الجهد</div><div class="meta-value">${p.voltage}</div></div>
+    <div class="meta-item"><div class="meta-label">المدى / الدقة</div><div class="meta-value">${p.range}</div></div>
+  `;
+  document.getElementById('productModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeProductModal(){
+  document.getElementById('productModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function addFromModal(){
+  if(currentProductId)addToCart(currentProductId);
+  closeProductModal();
+}
+
+// ==================== CART ====================
+function addToCart(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p)return;
+  const existing=cart.find(x=>x.id===id);
+  if(existing){existing.qty++;}
+  else{cart.push({id:p.id,name:p.name,price:p.price,img:p.img,qty:1});}
+  updateCartUI();
+  saveToStorage();
+  showToast(`✅ ${p.name} — تم الإضافة للسلة!`,'success');
+}
+function removeFromCart(id){
+  cart=cart.filter(x=>x.id!==id);
+  updateCartUI();saveToStorage();
+}
+function changeQty(id,delta){
+  const item=cart.find(x=>x.id===id);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0)removeFromCart(id);
+  else{updateCartUI();saveToStorage();}
+}
+function updateCartUI(){
+  const totalItems=cart.reduce((a,x)=>a+x.qty,0);
+  const totalPrice=cart.reduce((a,x)=>a+x.price*x.qty,0);
+  const badge=document.getElementById('cartBadge');
+  badge.style.display=totalItems>0?'flex':'none';
+  badge.textContent=totalItems;
+  document.getElementById('cartCount').textContent=totalItems;
+  document.getElementById('cartTotal').textContent='$'+totalPrice.toFixed(2);
+  const wrap=document.getElementById('cartItemsWrap');
+  const footer=document.getElementById('cartFooter');
+  if(cart.length===0){
+    wrap.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div>السلة فاضية</div></div>';
+    footer.style.display='none';
+  } else {
+    footer.style.display='block';
+    wrap.innerHTML=cart.map(item=>`
+      <div class="cart-item">
+        <img class="cart-item-img" src="${item.img}" alt="${item.name}" onerror="this.src=''">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">$${(item.price*item.qty).toFixed(2)}</div>
+          <div class="cart-item-qty">
+            <div class="qty-btn" onclick="changeQty(${item.id},-1)">−</div>
+            <div class="qty-num">${item.qty}</div>
+            <div class="qty-btn" onclick="changeQty(${item.id},1)">+</div>
+          </div>
+        </div>
+        <div class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</div>
+      </div>
+    `).join('');
+  }
+}
+function openCart(){document.getElementById('cartSidebar').classList.add('open');document.getElementById('cartOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeCart(){document.getElementById('cartSidebar').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function checkout(){
+  if(cart.length===0)return;
+  const total=cart.reduce((a,x)=>a+x.price*x.qty,0);
+  const orderNum='ORD-'+Date.now().toString().slice(-6);
+  // Save order
+  const order={id:orderNum,date:new Date().toLocaleDateString('ar-EG'),items:cart.map(x=>x.name+'×'+x.qty).join(', '),total:'$'+total.toFixed(2),status:'pending',user:currentUser?.name||'زائر'};
+  orders.unshift(order);
+  saveToStorage();
+  renderOrders();
+  // WhatsApp
+  let msg=`🛒 طلب جديد من متجر عمر\n🔢 رقم الطلب: ${orderNum}\n👤 الاسم: ${currentUser?.name||'زائر'}\n\n`;
+  cart.forEach(x=>msg+=`• ${x.name} ×${x.qty} = $${(x.price*x.qty).toFixed(2)}\n`);
+  msg+=`\n💰 الإجمالي: $${total.toFixed(2)}\n🚚 الشحن: مجاناً 🎉\n\nشكراً لثقتك! 🚀`;
+  window.open(`https://wa.me/201285590979?text=${encodeURIComponent(msg)}`,'_blank');
+  cart=[];updateCartUI();saveToStorage();closeCart();
+  showToast('✅ تم إرسال الطلب بنجاح! شكراً لك 🎉','success');
+}
+
+// ==================== ORDERS ====================
+function renderOrders(){
+  const tbody=document.getElementById('ordersBody');
+  if(orders.length===0){
+    tbody.innerHTML='<tr><td colspan="5"><div class="no-orders"><span class="no-orders-icon">📋</span>لا توجد طلبات سابقة بعد</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML=orders.map(o=>`
+    <tr>
+      <td><span style="font-family:'JetBrains Mono',monospace;color:var(--accent)">${o.id}</span></td>
+      <td>${o.date}</td>
+      <td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${o.items}">${o.items}</td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent)">${o.total}</span></td>
+      <td><span class="order-status ${o.status==='done'?'status-done':'status-pending'}">${o.status==='done'?'✅ مكتمل':'⏳ قيد التنفيذ'}</span></td>
+    </tr>
+  `).join('');
+}
+function scrollToOrders(){document.getElementById('orders').scrollIntoView({behavior:'smooth'});closeUserMenu();}
+
+// ==================== AUTH ====================
+function openAuthModal(){document.getElementById('authModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeAuthModal(){document.getElementById('authModal').classList.remove('open');document.body.style.overflow='';}
+function switchTab(tab){
+  document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
+  document.getElementById('registerForm').style.display=tab==='register'?'block':'none';
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-register').classList.toggle('active',tab==='register');
+  document.getElementById('loginError').style.display='none';
+  document.getElementById('registerError').style.display='none';
+  document.getElementById('registerSuccess').style.display='none';
+}
+
+function getUsers(){try{return JSON.parse(localStorage.getItem('omarStore_users')||'[]');}catch{return[];}}
+function saveUsers(u){localStorage.setItem('omarStore_users',JSON.stringify(u));}
+
+function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  const users=getUsers();
+  const user=users.find(u=>u.email===email&&u.pass===pass);
+  const err=document.getElementById('loginError');
+  if(!user){err.style.display='block';return;}
+  err.style.display='none';
+  currentUser=user;
+  localStorage.setItem('omarStore_user',JSON.stringify(user));
+  updateAuthUI();closeAuthModal();
+  showToast(`مرحباً ${user.name}! 👋`,'success');
+}
+function doRegister(){
+  const name=document.getElementById('regName').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  const pass=document.getElementById('regPass').value;
+  const err=document.getElementById('registerError');
+  const suc=document.getElementById('registerSuccess');
+  if(!name||!email||!pass){err.textContent='❌ يرجى ملء كل الحقول';err.style.display='block';return;}
+  const users=getUsers();
+  if(users.find(u=>u.email===email)){err.textContent='❌ البريد الإلكتروني مسجل من قبل';err.style.display='block';return;}
+  err.style.display='none';
+  users.push({name,email,phone,pass});
+  saveUsers(users);
+  suc.style.display='block';
+  setTimeout(()=>switchTab('login'),1500);
+}
+function logout(){
+  currentUser=null;
+  localStorage.removeItem('omarStore_user');
+  updateAuthUI();closeUserMenu();
+  showToast('تم تسجيل الخروج بنجاح','info');
+}
+function updateAuthUI(){
+  const loginBtn=document.getElementById('loginBtn');
+  const menu=document.getElementById('userMenu');
+  if(currentUser){
+    loginBtn.textContent='👤 '+currentUser.name.split(' ')[0];
+    loginBtn.onclick=toggleUserMenu;
+    document.getElementById('menuName').textContent=currentUser.name;
+    document.getElementById('menuEmail').textContent=currentUser.email;
+  } else {
+    loginBtn.textContent=currentLang==='ar'?'تسجيل دخول':'Sign In';
+    loginBtn.onclick=openAuthModal;
+    menu.classList.remove('open');
+  }
+}
+function toggleUserMenu(){document.getElementById('userMenu').classList.toggle('open');}
+function closeUserMenu(){document.getElementById('userMenu').classList.remove('open');}
+document.addEventListener('click',e=>{
+  const wrap=document.getElementById('userBtnWrap');
+  if(wrap&&!wrap.contains(e.target))closeUserMenu();
+});
+
+// ==================== CONTACT ====================
+function sendContact(){
+  const name=document.getElementById('contactName').value.trim();
+  const email=document.getElementById('contactEmail').value.trim();
+  const msg=document.getElementById('contactMsg').value.trim();
+  if(!name||!msg){showToast('❌ يرجى ملء الاسم والرسالة','error');return;}
+  const whatsMsg=`رسالة من متجر عمر:\n👤 الاسم: ${name}\n📧 البريد: ${email||'غير محدد'}\n\n💬 الرسالة:\n${msg}`;
+  window.open(`https://wa.me/201285590979?text=${encodeURIComponent(whatsMsg)}`,'_blank');
+  document.getElementById('contactName').value='';
+  document.getElementById('contactEmail').value='';
+  document.getElementById('contactMsg').value='';
+  showToast('✅ تم إرسال رسالتك بنجاح!','success');
+}
+
+// ==================== TOAST ====================
+function showToast(msg,type='info'){
+  const container=document.getElementById('toastContainer');
+  const toast=document.createElement('div');
+  toast.className=`toast ${type}`;
+  toast.textContent=msg;
+  container.appendChild(toast);
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{toast.classList.add('show');});});
+  setTimeout(()=>{toast.classList.remove('show');setTimeout(()=>toast.remove(),400);},3000);
+}
+
+// ==================== LANG & MODE ====================
+function toggleLang(){
+  currentLang=currentLang==='ar'?'en':'ar';
+  document.documentElement.lang=currentLang;
+  document.documentElement.dir=currentLang==='ar'?'rtl':'ltr';
+  document.getElementById('langBtn').textContent=currentLang==='ar'?'🇺🇸':'🇪🇬';
+  document.querySelectorAll('[data-ar][data-en]').forEach(el=>{
+    if(el.hasAttribute('data-ar'))el.textContent=el.getAttribute(currentLang==='ar'?'data-ar':'data-en');
+  });
+  applyFilters();
+  updateAuthUI();
+}
+function toggleMode(){
+  document.body.classList.toggle('light-mode');
+  const dark=!document.body.classList.contains('light-mode');
+  document.getElementById('modeBtn').textContent=dark?'🌙':'☀️';
+}
+
+// ==================== MOBILE NAV ====================
+function toggleMobileNav(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+function closeMobileNav(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+}
+
+// ==================== MODAL CLOSE ON OUTSIDE CLICK ====================
+document.getElementById('authModal').addEventListener('click',function(e){if(e.target===this)closeAuthModal();});
+document.getElementById('productModal').addEventListener('click',function(e){if(e.target===this)closeProductModal();});
+
+// ==================== KEYBOARD ====================
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeProductModal();closeAuthModal();closeCart();}
+});
+
+// ==================== START ====================
+window.addEventListener('load',init);
+</script>
+</body>
+</html>
